@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="SSL Autoparts premium custom Shopify theme concept" />
+<title>SSL Autoparts — Premium Storefront Concept</title>
+<style>
+  :root{
+    --ink:#090909;
+    --ink-2:#121212;
+    --ink-3:#1a1a1a;
+    --paper:#f4f2ed;
+    --paper-2:#e9e6df;
+    --white:#fff;
+    --muted:#9c9c9c;
+    --line:rgba(255,255,255,.12);
+    --red:#e3222b;
+    --red-2:#b70f17;
+    --green:#80d69a;
+    --radius:20px;
+    --ease:cubic-bezier(.2,.8,.2,1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--ink);color:var(--white);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
+  body.lock{overflow:hidden}
+  a{color:inherit;text-decoration:none}
+  button,input,select{font:inherit}
+  button{cursor:pointer}
+  img{max-width:100%;display:block}
+  ::selection{background:var(--red);color:#fff}
+
+  /* Loading */
+  .loader{position:fixed;inset:0;background:#050505;z-index:9999;display:grid;place-items:center;transition:opacity .65s var(--ease),visibility .65s}
+  .loader.done{opacity:0;visibility:hidden}
+  .loader-inner{width:min(420px,82vw);text-align:center}
+  .loader-mark{display:flex;align-items:center;justify-content:center;gap:14px;font-size:31px;font-weight:900;letter-spacing:-1.5px}
+  .loader-gear{width:46px;height:46px;border:2px solid #fff;border-radius:50%;position:relative;animation:spin 1.8s linear infinite}
+  .loader-gear:before,.loader-gear:after{content:"";position:absolute;inset:10px;border:2px dashed var(--red);border-radius:50%}
+  .loader-gear:after{inset:18px;background:var(--red);border:0}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loader-track{height:2px;background:#252525;margin:28px 0 10px;overflow:hidden}
+  .loader-fill{height:100%;background:var(--red);width:0;animation:load 1.45s var(--ease) forwards}
+  @keyframes load{to{width:100%}}
+  .loader-copy{font-size:10px;letter-spacing:2.6px;text-transform:uppercase;color:#767676}
+
+  /* Utility */
+  .container{width:min(1420px,calc(100% - 64px));margin:auto}
+  .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:2.8px;font-weight:800;display:flex;gap:10px;align-items:center;color:#c7c7c7}
+  .eyebrow:before{content:"";width:22px;height:2px;background:var(--red)}
+  .display{font-size:clamp(52px,7.2vw,118px);line-height:.86;letter-spacing:-.065em;font-weight:900;margin:0;text-transform:uppercase}
+  .section-title{font-size:clamp(38px,5vw,76px);line-height:.94;letter-spacing:-.055em;margin:0;font-weight:900;text-transform:uppercase}
+  .muted{color:#979797}
+  .btn{border:0;display:inline-flex;align-items:center;gap:14px;height:52px;padding:0 22px;border-radius:999px;font-weight:800;transition:.3s var(--ease)}
+  .btn svg{width:16px;transition:transform .3s var(--ease)}
+  .btn:hover svg{transform:translateX(4px)}
+  .btn-red{background:var(--red);color:#fff;box-shadow:0 12px 34px rgba(227,34,43,.25)}
+  .btn-red:hover{background:#ff2732;transform:translateY(-2px)}
+  .btn-dark{background:#151515;color:#fff;border:1px solid rgba(255,255,255,.13)}
+  .btn-dark:hover{background:#202020}
+  .pill{border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:9px 12px;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:#bbb}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* Announcement */
+  .announcement{height:34px;background:var(--red);display:flex;align-items:center;overflow:hidden;font-size:10px;text-transform:uppercase;letter-spacing:1.6px;font-weight:900}
+  .ticker{display:flex;width:max-content;animation:ticker 26s linear infinite;gap:42px;padding-left:42px}
+  .ticker span{white-space:nowrap}
+  @keyframes ticker{to{transform:translateX(-50%)}}
+
+  /* Header */
+  header{height:82px;position:sticky;top:0;z-index:80;background:rgba(9,9,9,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.08)}
+  .header-inner{height:100%;display:grid;grid-template-columns:220px 1fr 220px;align-items:center;gap:22px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:-.7px}
+  .brand-symbol{width:38px;height:38px;border-radius:50%;border:2px solid #fff;position:relative}
+  .brand-symbol:before{content:"";position:absolute;inset:8px;border:5px dotted var(--red);border-radius:50%}
+  .brand-symbol:after{content:"";position:absolute;right:-9px;top:-2px;width:17px;height:17px;background:var(--red);clip-path:polygon(0 0,100% 0,100% 100%)}
+  .brand small{display:block;font-size:7px;letter-spacing:2.3px;color:#888;text-transform:uppercase;margin-top:2px}
+  .nav{display:flex;justify-content:center;gap:30px;font-size:12px;font-weight:760;letter-spacing:.3px}
+  .nav a{color:#bcbcbc;position:relative;transition:.25s}
+  .nav a:hover{color:#fff}
+  .nav a:after{content:"";position:absolute;left:0;right:100%;bottom:-8px;height:2px;background:var(--red);transition:.25s}
+  .nav a:hover:after{right:0}
+  .header-actions{display:flex;justify-content:flex-end;gap:8px}
+  .icon-btn{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:transparent;color:#fff;display:grid;place-items:center;transition:.25s}
+  .icon-btn:hover{border-color:#fff;transform:translateY(-2px)}
+  .icon-btn svg{width:18px}
+  .cart-count{position:absolute;background:var(--red);width:16px;height:16px;border-radius:50%;font-size:9px;display:grid;place-items:center;transform:translate(13px,-13px)}
+  .menu-btn{display:none}
+
+  /* Hero */
+  .hero{min-height:calc(100vh - 116px);position:relative;display:flex;align-items:center;overflow:hidden;background:
+    radial-gradient(circle at 72% 48%,rgba(227,34,43,.14),transparent 28%),
+    linear-gradient(180deg,#0a0a0a,#080808)}
+  .hero:after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to right,#000,transparent 85%);pointer-events:none}
+  .hero-inner{position:relative;z-index:3;padding:80px 0 70px;display:grid;grid-template-columns:1.06fr .94fr;gap:40px;align-items:center}
+  .hero-copy{max-width:810px}
+  .hero .display span{color:var(--red);display:block}
+  .hero-intro{font-size:17px;line-height:1.65;max-width:610px;color:#a5a5a5;margin:28px 0 32px}
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+  .hero-meta{margin-top:48px;display:flex;gap:30px;flex-wrap:wrap}
+  .meta-item{display:flex;gap:10px;align-items:center;color:#aaa;font-size:12px}
+  .meta-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 6px rgba(128,214,154,.08)}
+
+  .hero-stage{min-height:620px;position:relative;display:grid;place-items:center}
+  .stage-orbit{position:absolute;width:570px;height:570px;border:1px solid rgba(255,255,255,.1);border-radius:50%}
+  .stage-orbit:before,.stage-orbit:after{content:"";position:absolute;border-radius:50%;border:1px dashed rgba(255,255,255,.09)}
+  .stage-orbit:before{inset:58px}.stage-orbit:after{inset:138px}
+  .hero-product{position:relative;z-index:2;width:min(690px,112%);filter:drop-shadow(0 34px 45px rgba(0,0,0,.6));animation:float 5.5s ease-in-out infinite}
+  @keyframes float{50%{transform:translateY(-16px) rotate(-1deg)}}
+  .hero-product img{width:100%;object-fit:contain;mix-blend-mode:screen}
+  .tech-label{position:absolute;background:rgba(14,14,14,.88);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:13px 14px;font-size:10px;color:#999;letter-spacing:1.1px;text-transform:uppercase;z-index:4}
+  .tech-label b{display:block;color:#fff;font-size:12px;margin-top:4px;letter-spacing:.2px}
+  .label-a{top:17%;right:2%}.label-b{bottom:16%;left:-4%}
+  .hero-index{position:absolute;right:24px;bottom:24px;font-size:11px;color:#666;writing-mode:vertical-rl;letter-spacing:2px;text-transform:uppercase}
+
+  /* Fitment bar */
+  .fitment-wrap{background:var(--paper);color:var(--ink);padding:0 0 105px;position:relative}
+  .fitment-card{transform:translateY(-1px);background:#fff;border-radius:0 0 28px 28px;padding:30px;box-shadow:0 32px 90px rgba(0,0,0,.18);display:grid;grid-template-columns:260px 1fr auto;gap:22px;align-items:end}
+  .fitment-title{font-size:23px;line-height:1.05;font-weight:900;letter-spacing:-.8px;text-transform:uppercase}
+  .fitment-title span{color:var(--red)}
+  .fitment-fields{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+  .field label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:1.4px;color:#888;font-weight:800;margin:0 0 7px 6px}
+  .field select{width:100%;height:52px;border:1px solid #dedbd4;background:#f8f7f3;border-radius:12px;padding:0 14px;outline:none;font-weight:700;color:#111;appearance:none;background-image:linear-gradient(45deg,transparent 50%,#444 50%),linear-gradient(135deg,#444 50%,transparent 50%);background-position:calc(100% - 17px) 22px,calc(100% - 12px) 22px;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+  .fitment-go{height:52px;border:0;border-radius:12px;background:var(--ink);color:#fff;padding:0 22px;font-weight:900;display:flex;align-items:center;gap:12px}
+  .fitment-go:hover{background:var(--red)}
+  .fitment-foot{grid-column:2 / 4;color:#85827c;font-size:11px;margin-top:-6px}
+
+  /* Category architecture */
+  .catalogue{background:var(--paper);color:var(--ink);padding:10px 0 120px}
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:44px}
+  .section-head p{max-width:490px;color:#75736e;line-height:1.7;font-size:14px;margin:0}
+  .category-grid{display:grid;grid-template-columns:1.25fr .75fr .75fr;grid-template-rows:320px 250px;gap:14px}
+  .category{position:relative;overflow:hidden;border-radius:18px;background:#dcd9d2;isolation:isolate;cursor:pointer}
+  .category:first-child{grid-row:span 2}
+  .category:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(0,0,0,.72));z-index:1}
+  .category img{width:100%;height:100%;object-fit:contain;padding:30px;transition:transform .75s var(--ease),filter .75s var(--ease);filter:drop-shadow(0 28px 25px rgba(0,0,0,.22))}
+  .category:first-child img{padding:50px}
+  .category:hover img{transform:scale(1.05) rotate(-2deg)}
+  .category-info{position:absolute;z-index:2;left:24px;right:24px;bottom:22px;color:#fff;display:flex;align-items:end;justify-content:space-between;gap:12px}
+  .category-info small{font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:#bdbdbd}
+  .category-info h3{font-size:25px;letter-spacing:-.9px;margin:6px 0 0;text-transform:uppercase}
+  .category-arrow{width:43px;height:43px;border-radius:50%;background:#fff;color:#111;display:grid;place-items:center;transition:.3s}
+  .category:hover .category-arrow{background:var(--red);color:#fff;transform:rotate(-45deg)}
+
+  /* Precision strip */
+  .precision{background:#0c0c0c;padding:105px 0;position:relative;overflow:hidden}
+  .precision:before{content:"SSL";position:absolute;right:-30px;top:-70px;font-size:360px;font-weight:900;letter-spacing:-35px;color:rgba(255,255,255,.018);line-height:1}
+  .precision-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;align-items:center}
+  .precision-visual{min-height:510px;background:linear-gradient(145deg,#181818,#0e0e0e);border:1px solid rgba(255,255,255,.09);border-radius:24px;display:grid;place-items:center;position:relative;overflow:hidden}
+  .precision-visual:before{content:"";position:absolute;width:540px;height:540px;border:1px solid rgba(227,34,43,.25);border-radius:50%;box-shadow:0 0 0 70px rgba(227,34,43,.025),0 0 0 150px rgba(227,34,43,.015)}
+  .precision-visual img{width:86%;position:relative;z-index:2;filter:drop-shadow(0 30px 35px #000)}
+  .spec-tag{position:absolute;left:20px;bottom:20px;border-radius:12px;background:#0d0d0d;border:1px solid rgba(255,255,255,.12);padding:15px;z-index:4}
+  .spec-tag strong{font-size:23px;display:block}.spec-tag span{font-size:9px;text-transform:uppercase;letter-spacing:1.6px;color:#888}
+  .precision-copy p{color:#929292;line-height:1.75;max-width:620px;font-size:15px;margin:26px 0 33px}
+  .feature-list{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);margin-top:40px}
+  .feature{padding:20px 20px 20px 0;border-bottom:1px solid var(--line)}
+  .feature:nth-child(odd){border-right:1px solid var(--line)}
+  .feature:nth-child(even){padding-left:20px}
+  .feature b{font-size:12px;display:block;margin-bottom:6px}.feature span{font-size:11px;color:#777}
+
+  /* Products */
+  .products{background:var(--paper);color:var(--ink);padding:110px 0}
+  .products .eyebrow{color:#6e6a63}
+  .product-toolbar{display:flex;gap:8px;margin:32px 0 26px;overflow:auto;padding-bottom:5px}
+  .tab{border:1px solid #d6d3cc;background:transparent;border-radius:999px;padding:10px 15px;font-size:11px;font-weight:800;white-space:nowrap;color:#69665f}
+  .tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .product-card{background:#fff;border-radius:16px;overflow:hidden;position:relative;transition:.35s var(--ease);border:1px solid #e4e1db}
+  .product-card:hover{transform:translateY(-7px);box-shadow:0 20px 55px rgba(0,0,0,.12)}
+  .product-image{height:275px;background:#efede8;display:grid;place-items:center;padding:26px;position:relative;overflow:hidden}
+  .product-image:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(227,34,43,.06);filter:blur(8px)}
+  .product-image img{width:100%;height:100%;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 22px 18px rgba(0,0,0,.22));transition:.45s var(--ease)}
+  .product-card:hover img{transform:scale(1.05) rotate(-2deg)}
+  .badge{position:absolute;top:13px;left:13px;z-index:4;background:#111;color:#fff;border-radius:999px;padding:7px 9px;font-size:8px;text-transform:uppercase;letter-spacing:1.3px;font-weight:800}
+  .badge.red{background:var(--red)}
+  .wish{position:absolute;right:12px;top:12px;z-index:4;width:36px;height:36px;border:0;border-radius:50%;background:rgba(255,255,255,.86);display:grid;place-items:center}
+  .product-body{padding:18px}
+  .product-type{font-size:8px;text-transform:uppercase;letter-spacing:1.7px;color:#96928a;font-weight:800}
+  .product-title{font-size:14px;line-height:1.42;font-weight:800;min-height:59px;margin:9px 0 12px}
+  .fit-badge{display:inline-flex;gap:5px;align-items:center;background:#edf7ee;color:#2d7742;border-radius:6px;padding:6px 8px;font-size:9px;font-weight:800;margin-bottom:15px}
+  .product-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #eeeae2;padding-top:14px}
+  .price{font-size:19px;font-weight:900;letter-spacing:-.7px}
+  .quickadd{border:0;background:#111;color:#fff;border-radius:9px;width:38px;height:38px;font-size:20px;transition:.2s}
+  .quickadd:hover{background:var(--red)}
+
+  /* vehicle garage */
+  .garage{padding:110px 0;background:#cfd1d2;color:#0c0c0c;position:relative;overflow:hidden}
+  .garage:after{content:"";position:absolute;right:-120px;top:-210px;width:650px;height:650px;border-radius:50%;border:100px solid rgba(255,255,255,.22)}
+  .garage-grid{display:grid;grid-template-columns:1fr .9fr;gap:80px;align-items:center;position:relative;z-index:2}
+  .garage-card{background:#111;color:#fff;border-radius:24px;padding:20px;box-shadow:0 30px 80px rgba(0,0,0,.28);transform:rotate(2deg)}
+  .garage-top{display:flex;align-items:center;justify-content:space-between;padding:8px 6px 22px}
+  .garage-car{background:linear-gradient(145deg,#222,#101010);border-radius:18px;padding:26px;min-height:310px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+  .garage-car:before{content:"";position:absolute;right:-80px;top:-90px;width:260px;height:260px;border:1px solid rgba(255,255,255,.09);border-radius:50%}
+  .garage-car h3{font-size:37px;letter-spacing:-1.6px;margin:0;text-transform:uppercase}.garage-car p{color:#888;font-size:12px}
+  .car-line{height:68px;margin:24px 0;position:relative}
+  .car-line:before{content:"";position:absolute;left:8%;right:8%;top:28px;height:18px;background:linear-gradient(90deg,#5f6266,#c5c7ca 45%,#5f6266);border-radius:60% 48% 16% 16%;filter:drop-shadow(0 10px 8px #000)}
+  .car-line:after{content:"";position:absolute;left:21%;right:21%;top:12px;height:30px;border:9px solid #818489;border-bottom:0;border-radius:50% 50% 0 0}
+  .garage-actions{display:flex;gap:8px}.garage-actions button{flex:1;height:42px;border-radius:9px;border:1px solid #323232;background:#181818;color:#fff;font-weight:800;font-size:10px}.garage-actions button:first-child{background:var(--red);border-color:var(--red)}
+  .garage-copy .section-title{max-width:710px}.garage-copy p{font-size:16px;line-height:1.7;color:#555b5e;max-width:610px;margin:26px 0}
+  .garage-points{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:30px}.garage-point{border-top:1px solid rgba(0,0,0,.18);padding-top:13px}.garage-point b{display:block;font-size:12px}.garage-point span{display:block;font-size:10px;color:#6d7072;margin-top:5px}
+
+  /* social proof */
+  .proof{padding:100px 0;background:#0a0a0a}
+  .proof-head{display:grid;grid-template-columns:1fr auto;align-items:end;gap:30px;margin-bottom:42px}
+  .score{display:flex;gap:14px;align-items:center}.score strong{font-size:52px;letter-spacing:-3px}.stars{color:#ffcf4a;letter-spacing:3px;font-size:15px}.score small{display:block;color:#777;margin-top:4px}
+  .reviews{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:12px}
+  .review{border:1px solid var(--line);border-radius:17px;padding:24px;background:#101010;min-height:260px;display:flex;flex-direction:column;justify-content:space-between}
+  .review.featured{background:var(--red);border-color:var(--red)}
+  .review p{font-size:14px;line-height:1.68;color:#b3b3b3;margin:28px 0}.review.featured p{font-size:22px;line-height:1.45;color:#fff;letter-spacing:-.4px}.review-meta{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:#777}.review.featured .review-meta{color:#ffd4d6}
+
+  /* service split */
+  .service{background:var(--paper);color:var(--ink);padding:110px 0}
+  .service-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .service-panel{border-radius:22px;min-height:530px;padding:44px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
+  .service-panel.dark{background:#111;color:#fff}.service-panel.red{background:var(--red);color:#fff}
+  .service-no{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.55)}
+  .service-panel h3{font-size:clamp(44px,4.4vw,74px);line-height:.9;letter-spacing:-3.5px;text-transform:uppercase;margin:0;max-width:590px}
+  .service-panel p{max-width:500px;color:rgba(255,255,255,.68);line-height:1.65;font-size:13px}
+  .service-shape{position:absolute;right:-75px;top:-65px;width:270px;height:270px;border:55px solid rgba(255,255,255,.08);border-radius:50%}
+
+  /* editorial/news */
+  .journal{padding:110px 0;background:#f6f4ef;color:#111}
+  .journal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:38px}
+  .article{border-top:1px solid #cac5bb;padding-top:16px}
+  .article-visual{height:210px;border-radius:14px;background:linear-gradient(145deg,#282828,#0b0b0b);margin:16px 0;position:relative;overflow:hidden}
+  .article-visual:before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 70% 40%,rgba(227,34,43,.65),transparent 24%),linear-gradient(125deg,transparent 42%,rgba(255,255,255,.07) 42% 44%,transparent 44%)}
+  .article-no{position:absolute;left:18px;bottom:13px;color:#fff;font-size:60px;font-weight:900;letter-spacing:-5px;opacity:.18}
+  .article small{font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:#87827a}.article h3{font-size:20px;line-height:1.2;letter-spacing:-.6px;margin:10px 0}.article a{font-size:10px;text-transform:uppercase;font-weight:900;border-bottom:1px solid #111;padding-bottom:3px}
+
+  /* footer */
+  footer{background:#070707;padding:80px 0 32px}
+  .footer-top{display:grid;grid-template-columns:1.4fr .6fr .6fr .7fr;gap:60px;padding-bottom:70px}
+  .footer-big{font-size:clamp(48px,6vw,88px);line-height:.9;letter-spacing:-4.6px;text-transform:uppercase;font-weight:900;margin:16px 0 28px}.footer-big span{color:var(--red)}
+  .footer-contact{display:flex;gap:10px;flex-wrap:wrap}.footer-col h5{font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:#666;margin:0 0 18px}.footer-col a,.footer-col p{font-size:12px;line-height:2;color:#aaa;margin:0;display:block}.footer-col a:hover{color:#fff}
+  .footer-bottom{padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:#565656;font-size:10px;letter-spacing:.5px}
+
+  /* overlays */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.64);backdrop-filter:blur(7px);z-index:120;opacity:0;visibility:hidden;transition:.3s}
+  .overlay.open{opacity:1;visibility:visible}
+  .search-panel{position:absolute;top:0;left:0;right:0;background:#0d0d0d;border-bottom:1px solid #242424;padding:34px 0 42px;transform:translateY(-30px);transition:.35s var(--ease)}
+  .overlay.open .search-panel{transform:none}
+  .search-row{display:flex;gap:14px;align-items:center}.search-row input{flex:1;background:transparent;border:0;border-bottom:1px solid #424242;color:#fff;font-size:clamp(28px,4vw,58px);font-weight:850;letter-spacing:-2px;outline:none;padding:16px 0}.search-row input::placeholder{color:#444}
+  .search-close{background:none;color:#fff;border:1px solid #333;border-radius:50%;width:45px;height:45px}
+  .search-hints{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.search-hints span{border:1px solid #282828;border-radius:999px;padding:8px 10px;font-size:10px;color:#777}
+  .drawer{position:fixed;right:0;top:0;bottom:0;width:min(450px,100%);background:#f6f4ef;color:#111;z-index:140;transform:translateX(105%);transition:.45s var(--ease);padding:26px;display:flex;flex-direction:column;box-shadow:-30px 0 80px rgba(0,0,0,.35)}
+  .drawer.open{transform:none}.drawer-head{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #d9d5cd;padding-bottom:18px}.drawer-head h3{margin:0;font-size:24px;letter-spacing:-1px}.drawer-close{border:0;background:#111;color:#fff;width:36px;height:36px;border-radius:50%}.cart-item{display:grid;grid-template-columns:90px 1fr;gap:15px;padding:24px 0;border-bottom:1px solid #dedad2}.cart-img{height:90px;border-radius:12px;background:#e8e5df;display:grid;place-items:center}.cart-img img{width:84%;height:84%;object-fit:contain}.cart-item h4{font-size:12px;margin:4px 0 9px;line-height:1.4}.cart-item small{color:#8d8981}.drawer-total{margin-top:auto;border-top:1px solid #d9d5cd;padding-top:20px}.drawer-total div{display:flex;justify-content:space-between;font-size:17px;font-weight:900;margin-bottom:18px}.checkout{width:100%;height:52px;border:0;border-radius:12px;background:var(--red);color:#fff;font-weight:900}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,120px);z-index:200;background:#fff;color:#111;border-radius:12px;padding:14px 18px;box-shadow:0 15px 50px rgba(0,0,0,.35);font-size:12px;font-weight:800;transition:.4s var(--ease)}.toast.show{transform:translate(-50%,0)}
+
+  /* responsive */
+  @media(max-width:1100px){
+    .container{width:min(100% - 38px,1420px)}
+    .header-inner{grid-template-columns:190px 1fr}.nav{display:none}.header-actions{grid-column:2}.menu-btn{display:grid}
+    .hero-inner{grid-template-columns:1fr;padding-top:65px}.hero-stage{min-height:470px}.stage-orbit{width:430px;height:430px}.hero-product{width:min(620px,88vw)}
+    .fitment-card{grid-template-columns:1fr auto}.fitment-title{grid-column:1 / 3}.fitment-fields{grid-template-columns:repeat(4,1fr)}.fitment-foot{grid-column:1 / 3}
+    .category-grid{grid-template-columns:1fr 1fr;grid-template-rows:420px 250px 250px}.category:first-child{grid-column:span 2;grid-row:auto}.category:first-child img{padding:30px}
+    .precision-grid,.garage-grid{grid-template-columns:1fr;gap:50px}.precision-visual{min-height:460px}.garage-card{max-width:670px;margin:auto;width:100%}
+    .product-grid{grid-template-columns:repeat(2,1fr)}.reviews{grid-template-columns:1fr 1fr}.review.featured{grid-column:span 2}
+    .footer-top{grid-template-columns:1.4fr .6fr .6fr}.footer-top>div:first-child{grid-column:span 3}.journal-grid{grid-template-columns:1fr 1fr}.journal-grid .article:last-child{display:none}
+  }
+  @media(max-width:720px){
+    .container{width:calc(100% - 28px)}
+    .announcement{height:30px}
+    header{height:68px}.header-inner{grid-template-columns:1fr auto}.brand{font-size:15px}.brand-symbol{width:32px;height:32px}.header-actions .icon-btn:nth-child(2){display:none}
+    .hero{min-height:auto}.hero-inner{padding:56px 0 35px}.display{font-size:clamp(50px,17vw,78px)}.hero-intro{font-size:14px;margin:20px 0 24px}.hero-meta{margin-top:28px;gap:16px}.hero-stage{min-height:365px;margin-top:15px}.stage-orbit{width:310px;height:310px}.tech-label{font-size:8px}.label-a{top:8%}.label-b{bottom:9%;left:0}.hero-index{display:none}
+    .fitment-wrap{padding-bottom:75px}.fitment-card{margin:0 -14px;border-radius:0 0 20px 20px;padding:20px 14px;display:block}.fitment-title{font-size:20px;margin-bottom:18px}.fitment-fields{display:grid;grid-template-columns:1fr 1fr}.fitment-go{width:100%;justify-content:center;margin-top:10px}.fitment-foot{margin-top:12px}
+    .catalogue{padding-bottom:85px}.section-head{display:block;margin-bottom:28px}.section-head p{margin-top:18px}.category-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:360px 215px 215px}.category:first-child{grid-column:span 2}.category-info{left:15px;right:15px;bottom:14px}.category-info h3{font-size:18px}.category-arrow{width:36px;height:36px}
+    .precision,.products,.garage,.proof,.service,.journal{padding:78px 0}.precision-visual{min-height:350px}.precision-copy p{font-size:14px}.feature-list{grid-template-columns:1fr}.feature:nth-child(odd){border-right:0}.feature:nth-child(even){padding-left:0}
+    .product-grid{grid-template-columns:1fr 1fr;gap:8px}.product-image{height:190px;padding:14px}.product-body{padding:12px}.product-title{font-size:11px;min-height:60px}.price{font-size:15px}.wish{width:31px;height:31px}.quickadd{width:34px;height:34px}.fit-badge{font-size:8px}
+    .garage-grid{gap:40px}.garage-card{padding:12px;transform:none}.garage-car{min-height:275px;padding:20px}.garage-car h3{font-size:29px}.garage-points{grid-template-columns:1fr}.garage-point{padding-top:10px}
+    .proof-head{grid-template-columns:1fr}.reviews{grid-template-columns:1fr}.review.featured{grid-column:auto}.review.featured p{font-size:18px}.review{min-height:230px}
+    .service-grid{grid-template-columns:1fr}.service-panel{min-height:430px;padding:28px}.service-panel h3{font-size:48px;letter-spacing:-2.3px}
+    .journal-grid{grid-template-columns:1fr}.journal-grid .article:last-child{display:block}
+    .footer-top{grid-template-columns:1fr 1fr;gap:34px}.footer-top>div:first-child{grid-column:span 2}.footer-big{letter-spacing:-3px}.footer-bottom{display:block;line-height:1.8}
+  }
+  @media(max-width:430px){.product-grid{grid-template-columns:1fr}.product-image{height:250px}.category-grid{display:block}.category{height:245px;margin-bottom:9px}.category:first-child{height:330px}.fitment-fields{grid-template-columns:1fr}.hero-actions .btn{width:100%;justify-content:center}}
+</style>
+</head>
+<body>
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <div class="loader-mark"><span class="loader-gear"></span><span>SSL AUTOPARTS</span></div>
+    <div class="loader-track"><div class="loader-fill"></div></div>
+    <div class="loader-copy">Calibrating your drive</div>
+  </div>
+</div>
+
+<div class="announcement"><div class="ticker">
+  <span>UK remanufacturing specialists</span><span>Free UK delivery on selected products</span><span>120+ years combined motor industry experience</span><span>Old unit cashback available</span>
+  <span>UK remanufacturing specialists</span><span>Free UK delivery on selected products</span><span>120+ years combined motor industry experience</span><span>Old unit cashback available</span>
+</div></div>
+
+<header>
+  <div class="container header-inner">
+    <a class="brand" href="#"><span class="brand-symbol"></span><span>SSL AUTOPARTS<small>Steering & braking specialists</small></span></a>
+    <nav class="nav">
+      <a href="#catalogue">Shop Parts</a><a href="#fitment">Find My Part</a><a href="#service">Services</a><a href="#garage">My Garage</a><a href="#journal">Advice</a><a href="#footer">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="searchOpen" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.6"/><path d="m16 16 5 5"/></svg></button>
+      <button class="icon-btn" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.3"/><path d="M5.5 20c.7-4 2.8-6 6.5-6s5.8 2 6.5 6"/></svg></button>
+      <button class="icon-btn" id="cartOpen" aria-label="Cart" style="position:relative"><span class="cart-count">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16l-1.4 13H5.4L4 7Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg></button>
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-copy reveal">
+      <div class="eyebrow">Built to restore confidence</div>
+      <h1 class="display">Parts that<br><span>drive back.</span></h1>
+      <p class="hero-intro">Precision remanufactured steering and braking components, engineered for fitment confidence. Search by vehicle, find the right part faster and keep your car exactly where it belongs: on the road.</p>
+      <div class="hero-actions"><a class="btn btn-red" href="#fitment">Find parts for my vehicle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-dark" href="#catalogue">Explore catalogue</a></div>
+      <div class="hero-meta"><div class="meta-item"><span class="meta-dot"></span>UK specialist team</div><div class="meta-item"><span class="meta-dot"></span>Fitment checked</div><div class="meta-item"><span class="meta-dot"></span>Old unit cashback</div></div>
+    </div>
+    <div class="hero-stage reveal">
+      <div class="stage-orbit"></div>
+      <div class="hero-product"><img src="https://sslautoparts.com/wp-content/uploads/2025/02/red-calliper-new.webp" alt="Remanufactured red brake caliper"></div>
+      <div class="tech-label label-a">Category / braking<b>Remanufactured caliper</b></div>
+      <div class="tech-label label-b">Quality protocol<b>Clean · Inspect · Rebuild · Test</b></div>
+    </div>
+  </div>
+  <div class="hero-index">SSL / Precision parts / 2026 concept</div>
+</section>
+
+<section class="fitment-wrap" id="fitment">
+  <div class="container">
+    <div class="fitment-card reveal">
+      <div class="fitment-title">Start with your <span>vehicle.</span><br>We'll handle the rest.</div>
+      <div class="fitment-fields">
+        <div class="field"><label>01 Make</label><select id="make"><option value="">Choose make</option><option>BMW</option><option>Ford</option><option>Volkswagen</option><option>Audi</option><option>Citroen</option></select></div>
+        <div class="field"><label>02 Model</label><select id="model" disabled><option value="">Choose model</option></select></div>
+        <div class="field"><label>03 Year</label><select id="year" disabled><option value="">Choose year</option></select></div>
+        <div class="field"><label>04 Part type</label><select id="part" disabled><option value="">Choose part</option></select></div>
+      </div>
+      <button class="fitment-go" id="fitmentGo">Find compatible parts <span>→</span></button>
+      <div class="fitment-foot">Prototype interaction: select a make to activate progressive fitment fields. A production Shopify build would connect this to structured vehicle compatibility data.</div>
+    </div>
+  </div>
+</section>
+
+<section class="catalogue" id="catalogue">
+  <div class="container">
+    <div class="section-head reveal"><div><div class="eyebrow">Shop by system</div><h2 class="section-title">Purpose-built<br>for the parts you need.</h2></div><p>Instead of sending customers into a wall of filters, the new storefront guides them through clear systems and vehicle fitment. Fewer decisions. Faster routes to the right component.</p></div>
+    <div class="category-grid reveal">
+      <article class="category"><img src="https://sslautoparts.com/wp-content/uploads/2025/01/TT-LHD-PUMP-AND-RACK-2-1-1024x1001.png.webp" alt="Steering components"><div class="category-info"><div><small>01 / Steering</small><h3>Steering racks</h3></div><span class="category-arrow">↗</span></div></article>
+      <article class="category"><img src="https://sslautoparts.com/wp-content/uploads/2025/02/red-calliper-new.webp" alt="Brake calipers"><div class="category-info"><div><small>02 / Braking</small><h3>Brake calipers</h3></div><span class="category-arrow">↗</span></div></article>
+      <article class="category"><img src="https://sslautoparts.com/wp-content/uploads/2025/01/TT-LHD-PUMP-AND-RACK-2-1024x1001.png.webp" alt="Steering pumps"><div class="category-info"><div><small>03 / Hydraulic</small><h3>Steering pumps</h3></div><span class="category-arrow">↗</span></div></article>
+      <article class="category"><img src="https://sslautoparts.com/wp-content/uploads/2025/01/TT-LHD-PUMP-AND-RACK-2-1024x1001.png.webp" alt="Steering boxes"><div class="category-info"><div><small>04 / Steering</small><h3>Steering boxes</h3></div><span class="category-arrow">↗</span></div></article>
+      <article class="category"><img src="https://sslautoparts.com/wp-content/uploads/2025/01/TT-LHD-PUMP-AND-RACK-2-1-1024x1001.png.webp" alt="Steering components"><div class="category-info"><div><small>05 / Components</small><h3>Rack components</h3></div><span class="category-arrow">↗</span></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="precision">
+  <div class="container precision-grid">
+    <div class="precision-visual reveal"><img src="https://sslautoparts.com/wp-content/uploads/2025/01/TT-LHD-PUMP-AND-RACK-2-1-1024x1001.png.webp" alt="Remanufactured steering assembly"><div class="spec-tag"><strong>120+</strong><span>Combined years experience</span></div></div>
+    <div class="precision-copy reveal"><div class="eyebrow">Specialists, not generalists</div><h2 class="section-title">Rebuilt with<br>purpose.</h2><p>SSL Autoparts has specialised in steering and braking since 2013. The new experience brings that technical credibility to the front: fitment information is easier to understand, remanufacturing is explained clearly and every product route is designed around confidence.</p><a class="btn btn-red" href="#service">How remanufacturing works <span>→</span></a><div class="feature-list"><div class="feature"><b>Vehicle-specific fitment</b><span>Structured make, model and generation compatibility.</span></div><div class="feature"><b>Exchange programme</b><span>Clear old-unit return and cashback messaging.</span></div><div class="feature"><b>Specialist support</b><span>Talk to a team that actually understands the component.</span></div><div class="feature"><b>UK remanufacturing</b><span>Trust signals placed throughout the shopping journey.</span></div></div></div>
+  </div>
+</section>
+
+<section class="products">
+  <div class="container">
+    <div class="section-head reveal"><div><div class="eyebrow">Popular right now</div><h2 class="section-title">Parts people<br>come back for.</h2></div><a class="btn btn-dark" href="#" style="background:#111">View all products →</a></div>
+    <div class="product-toolbar reveal"><button class="tab active">Recommended</button><button class="tab">Brake calipers</button><button class="tab">Steering racks</button><button class="tab">Steering pumps</button><button class="tab">New arrivals</button></div>
+    <div class="product-grid reveal">
+      <article class="product-card"><div class="product-image"><span class="badge red">Reman service</span><button class="wish">♡</button><img src="https://sslautoparts.com/wp-content/uploads/2025/02/red-calliper-new.webp" alt="Brake caliper"></div><div class="product-body"><div class="product-type">Ford / Brake calipers</div><div class="product-title">Fiesta ST150 2.0 2005–2010 Pair of Rear Brake Calipers</div><div class="fit-badge">✓ Fitment available</div><div class="product-bottom"><span class="price">£175.00</span><button class="quickadd" onclick="openCart()">+</button></div></div></article>
+      <article class="product-card"><div class="product-image"><span class="badge">£150 cashback</span><button class="wish">♡</button><img src="https://sslautoparts.com/wp-content/uploads/2025/01/TT-LHD-PUMP-AND-RACK-2-1-1024x1001.png.webp" alt="Steering rack"></div><div class="product-body"><div class="product-type">Nissan / Steering racks</div><div class="product-title">NV400 X62 2017–2023 Power Steering Rack</div><div class="fit-badge">✓ Fitment available</div><div class="product-bottom"><span class="price">£495.00</span><button class="quickadd" onclick="openCart()">+</button></div></div></article>
+      <article class="product-card"><div class="product-image"><span class="badge">Genuine reman</span><button class="wish">♡</button><img src="https://sslautoparts.com/wp-content/uploads/2025/01/TT-LHD-PUMP-AND-RACK-2-1024x1001.png.webp" alt="Steering rack"></div><div class="product-body"><div class="product-type">Citroen / Steering racks</div><div class="product-title">DS4 2010–2015 Remanufactured Steering Rack + Rod Ends</div><div class="fit-badge">✓ Fits your saved vehicle</div><div class="product-bottom"><span class="price">£435.00</span><button class="quickadd" onclick="openCart()">+</button></div></div></article>
+      <article class="product-card"><div class="product-image"><span class="badge red">Best seller</span><button class="wish">♡</button><img src="https://sslautoparts.com/wp-content/uploads/2025/02/red-calliper-new.webp" alt="Brake caliper"></div><div class="product-body"><div class="product-type">Audi / Brake calipers</div><div class="product-title">Performance Front Brake Caliper Reconditioning Service</div><div class="fit-badge">✓ Vehicle check required</div><div class="product-bottom"><span class="price">£295.00</span><button class="quickadd" onclick="openCart()">+</button></div></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="garage" id="garage">
+  <div class="container garage-grid">
+    <div class="garage-card reveal"><div class="garage-top"><div><strong>MY GARAGE</strong><div style="font-size:9px;color:#777;margin-top:3px">1 vehicle saved</div></div><span class="pill">SSL ID / 02481</span></div><div class="garage-car"><div><div class="eyebrow">Primary vehicle</div><h3>2017 Volkswagen<br>Golf GTI</h3><p>2.0 TSI · Mk7.5 · Petrol · RHD</p></div><div class="car-line"></div><div class="garage-actions"><button>SHOP COMPATIBLE PARTS</button><button>EDIT VEHICLE</button></div></div></div>
+    <div class="garage-copy reveal"><div class="eyebrow" style="color:#54585a">Your vehicle, remembered</div><h2 class="section-title">Build your<br>garage once.</h2><p>A custom Shopify implementation can let customers save one or multiple vehicles. Product cards and PDPs can then show compatibility immediately, reducing uncertainty and creating a much more useful account experience.</p><div class="garage-points"><div class="garage-point"><b>Compatibility status</b><span>See if every product fits before opening it.</span></div><div class="garage-point"><b>Faster repeat orders</b><span>Your saved vehicles follow you across sessions.</span></div><div class="garage-point"><b>Cleaner mobile UX</b><span>No giant taxonomy drawer required.</span></div></div></div>
+  </div>
+</section>
+
+<section class="proof">
+  <div class="container">
+    <div class="proof-head reveal"><div><div class="eyebrow">Customer proof</div><h2 class="section-title">Built back better.<br>Backed by drivers.</h2></div><div class="score"><strong>4.9</strong><div><div class="stars">★★★★★</div><small>Customer review concept</small></div></div></div>
+    <div class="reviews reveal"><article class="review featured"><div class="stars">★★★★★</div><p>“The calipers looked like they came straight off the factory floor. Great communication and a genuinely professional service.”</p><div class="review-meta">Verified service customer / Brake caliper remanufacturing</div></article><article class="review"><div class="stars">★★★★★</div><p>“Fast delivery, beautifully refurbished unit and the return process was straightforward from start to finish.”</p><div class="review-meta">Verified buyer / Steering rack</div></article><article class="review"><div class="stars">★★★★★</div><p>“Hard-to-find part solved quickly. Fitment support made the whole order feel safe.”</p><div class="review-meta">Verified buyer / Steering component</div></article></div>
+  </div>
+</section>
+
+<section class="service" id="service">
+  <div class="container service-grid">
+    <article class="service-panel dark reveal"><div class="service-shape"></div><div><div class="service-no">01 / Send yours in</div><h3>Reconditioning service.</h3></div><div><p>Your existing component is stripped, inspected, rebuilt and tested by specialists. The redesigned journey would clearly show turnaround, what to send, packaging instructions and status updates.</p><a class="btn btn-red" href="#">How the service works →</a></div></article>
+    <article class="service-panel red reveal"><div class="service-shape"></div><div><div class="service-no">02 / Receive then return</div><h3>Exchange & cashback.</h3></div><div><p>Buy a remanufactured replacement first, fit it, then return the old unit. A custom Shopify workflow can make deposits, return instructions and cashback status understandable rather than buried inside product copy.</p><a class="btn btn-dark" href="#">Explore exchange products →</a></div></article>
+  </div>
+</section>
+
+<section class="journal" id="journal">
+  <div class="container"><div class="section-head reveal"><div><div class="eyebrow">SSL workshop journal</div><h2 class="section-title">Know the part<br>before you buy it.</h2></div><p>Technical editorial content gives customers confidence and gives search engines useful, relevant landing pages without bloating low-value tag archives.</p></div><div class="journal-grid reveal"><article class="article"><small>Workshop guide · 6 min</small><div class="article-visual"><span class="article-no">01</span></div><h3>How to tell if your steering rack needs replacement or remanufacturing</h3><a href="#">Read guide</a></article><article class="article"><small>Fitment guide · 4 min</small><div class="article-visual"><span class="article-no">02</span></div><h3>OE numbers explained: the quickest way to confirm the correct part</h3><a href="#">Read guide</a></article><article class="article"><small>Braking · 5 min</small><div class="article-visual"><span class="article-no">03</span></div><h3>Reconditioned brake calipers vs replacement: what actually matters</h3><a href="#">Read guide</a></article></div></div>
+</section>
+</main>
+
+<footer id="footer">
+  <div class="container"><div class="footer-top"><div><div class="eyebrow">Need a specialist?</div><div class="footer-big">Keep your car<br><span>moving.</span></div><div class="footer-contact"><a class="btn btn-red" href="tel:01924267999">01924 267 999</a><a class="btn btn-dark" href="mailto:enquiries@sslautoparts.com">Email the team</a></div></div><div class="footer-col"><h5>Shop</h5><a href="#">Steering racks</a><a href="#">Brake calipers</a><a href="#">Steering pumps</a><a href="#">Steering boxes</a><a href="#">Components</a></div><div class="footer-col"><h5>Support</h5><a href="#">Find my part</a><a href="#">Fitting service</a><a href="#">Returns</a><a href="#">Exchange units</a><a href="#">FAQs</a></div><div class="footer-col"><h5>Visit / Contact</h5><p>Unit 12A Mallard Industrial Park<br>Charles Street<br>Horbury<br>WF4 5FD</p><a href="mailto:enquiries@sslautoparts.com">enquiries@sslautoparts.com</a></div></div><div class="footer-bottom"><span>© 2026 SSL Autoparts — Premium Shopify concept prototype</span><span>Custom theme direction · performance-first · vehicle-fitment focused</span></div></div>
+</footer>
+
+<!-- Search -->
+<div class="overlay" id="searchOverlay"><div class="search-panel"><div class="container"><div class="search-row"><input id="globalSearch" type="search" placeholder="Search part, SKU, OE number or vehicle…" autofocus><button class="search-close" id="searchClose">✕</button></div><div class="search-hints"><span>Try “Ford Fiesta ST150 caliper”</span><span>Try OE number</span><span>Try “BMW steering rack”</span></div></div></div></div>
+
+<!-- Cart -->
+<div class="overlay" id="cartOverlay" onclick="closeCart(event)"></div>
+<aside class="drawer" id="cartDrawer"><div class="drawer-head"><h3>Your basket <span style="color:#999">(1)</span></h3><button class="drawer-close" onclick="closeCart()">✕</button></div><div class="cart-item"><div class="cart-img"><img src="https://sslautoparts.com/wp-content/uploads/2025/02/red-calliper-new.webp" alt="Brake caliper"></div><div><small>Remanufacturing service</small><h4>Ford Fiesta ST150 Pair of Rear Brake Calipers</h4><strong>£175.00</strong></div></div><div class="drawer-total"><div><span>Subtotal</span><span>£175.00</span></div><button class="checkout">Secure checkout →</button></div></aside>
+
+<div class="toast" id="toast">Compatible parts found — opening results</div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+window.addEventListener('load',()=>setTimeout(()=>$('#loader').classList.add('done'),1050));
+
+const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.13});
+$$('.reveal').forEach(el=>revealObserver.observe(el));
+
+const searchOverlay=$('#searchOverlay');
+$('#searchOpen').onclick=()=>{searchOverlay.classList.add('open');document.body.classList.add('lock');setTimeout(()=>$('#globalSearch').focus(),250)};
+$('#searchClose').onclick=()=>{searchOverlay.classList.remove('open');document.body.classList.remove('lock')};
+searchOverlay.addEventListener('click',e=>{if(e.target===searchOverlay){searchOverlay.classList.remove('open');document.body.classList.remove('lock')}});
+
+function openCart(){ $('#cartOverlay').classList.add('open'); $('#cartDrawer').classList.add('open'); document.body.classList.add('lock'); }
+function closeCart(e){ if(e && e.target!==$('#cartOverlay'))return; $('#cartOverlay').classList.remove('open'); $('#cartDrawer').classList.remove('open'); document.body.classList.remove('lock'); }
+window.openCart=openCart; window.closeCart=closeCart; $('#cartOpen').onclick=openCart;
+
+const make=$('#make'),model=$('#model'),year=$('#year'),part=$('#part');
+const vehicleData={BMW:['3 Series','5 Series','X3'],Ford:['Fiesta','Focus','Transit'],Volkswagen:['Golf','Passat','Transporter'],Audi:['A3','A4','Q5'],Citroen:['C3','C4','DS4']};
+make.onchange=()=>{model.innerHTML='<option value="">Choose model</option>';(vehicleData[make.value]||[]).forEach(v=>model.add(new Option(v,v)));model.disabled=!make.value;year.disabled=true;part.disabled=true;};
+model.onchange=()=>{year.innerHTML='<option value="">Choose year</option>';for(let y=2026;y>=1990;y--)year.add(new Option(y,y));year.disabled=!model.value;part.disabled=true;};
+year.onchange=()=>{part.innerHTML='<option value="">Choose part</option>';['Steering rack','Brake calipers','Steering pump','Steering box','Rack components'].forEach(v=>part.add(new Option(v,v)));part.disabled=!year.value;};
+$('#fitmentGo').onclick=()=>{const toast=$('#toast');toast.textContent=(make.value&&model.value&&year.value&&part.value)?`${make.value} ${model.value} ${year.value} — compatible ${part.value.toLowerCase()} results ready`:'Select your vehicle and part type first';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),3100)};
+
+$$('.tab').forEach(tab=>tab.onclick=()=>{$$('.tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');});
+$$('.wish').forEach(btn=>btn.onclick=()=>{btn.textContent=btn.textContent==='♡'?'♥':'♡';btn.style.color=btn.textContent==='♥'?'#e3222b':'#111'});
+
+$('#menuBtn').onclick=()=>{searchOverlay.classList.add('open');document.body.classList.add('lock');$('#globalSearch').placeholder='Search or navigate the prototype…'};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){searchOverlay.classList.remove('open');closeCart();document.body.classList.remove('lock')}});
+</script>
+</body>
+</html>
